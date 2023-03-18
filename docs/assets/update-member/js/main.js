@@ -24,7 +24,8 @@
 
 	  // Create a new object with the form data
 	  var data = {
-	    id,
+	    emaid: emaid 
+	    id: id,
 	    points: Number(points),
 	    university: university
 	  };
