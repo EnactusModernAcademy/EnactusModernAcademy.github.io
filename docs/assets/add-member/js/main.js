@@ -13,6 +13,7 @@
 	
 	event.preventDefault(); // Prevent the form from submitting
 
+          var emaid = document.getElementById("EMAID").value;
 	  var id = document.getElementById("ID").value;
 	  var name = document.getElementById("Name").value;
 	  var points = document.getElementById("Score").value;
@@ -33,8 +34,15 @@
   var db = firebase.firestore();
   
            if(getCheckedIndex()==0){
-           // Check if the user exists and update their score if they do
-    db.collection("ema").doc(id).get().then(function(doc) {
+           
+const authCollection = firebase.firestore().collection("auth");
+
+// Query for the user ID in the auth collection
+authCollection.doc(emaid).get()
+  .then((doc) => {
+    if (doc.exists) {
+    
+      db.collection("ema").doc(id).get().then(function(doc) {
     if (doc.exists) {
     alert("Document already exist!");
     }else{
@@ -50,13 +58,30 @@
     .catch(function(error) {
       alert("Error writing document: ", error.code);
     });
+    
     }
     
     });
-  }
+    } else {
+      // Restrict write access if the document does not exist in the auth collection
+      alert("User not authorized to write data.");
+    }
+  })
+  .catch((error) => {
+    alert("Error getting document:", error);
+  });
   
-         else if(getCheckedIndex()==1){
-          db.collection("cs").doc(id).get().then(function(doc) {
+         }else if(getCheckedIndex()==1){
+         
+        
+const authCollection = firebase.firestore().collection("auth");
+
+// Query for the user ID in the auth collection
+authCollection.doc(emaid).get()
+  .then((doc) => {
+    if (doc.exists) {
+    
+      db.collection("cs").doc(id).get().then(function(doc) {
     if (doc.exists) {
     alert("Document already exist!");
     }else{
@@ -76,10 +101,29 @@
     }
     
     });
+    } else {
+      // Restrict write access if the document does not exist in the auth collection
+      alert("User not authorized to write data.");
+    }
+  })
+  .catch((error) => {
+    alert("Error getting document:", error);
+  });
+         
+    
            
   }
     else if(getCheckedIndex()==2){
-        db.collection("eng").doc(id).get().then(function(doc) {
+    
+   
+const authCollection = firebase.firestore().collection("auth");
+
+// Query for the user ID in the auth collection
+authCollection.doc(emaid).get()
+  .then((doc) => {
+    if (doc.exists) {
+      
+       db.collection("eng").doc(id).get().then(function(doc) {
     if (doc.exists) {
     alert("Document already exist!");
     }else{
@@ -99,11 +143,31 @@
     }
     
     });
+      
+    } else {
+      // Restrict write access if the document does not exist in the auth collection
+      alert("User not authorized to write data.");
+    }
+  })
+  .catch((error) => {
+    alert("Error getting document:", error);
+  });
+    
+       
            
   }
         
            else if(getCheckedIndex()==3){
-            db.collection("mis").doc(id).get().then(function(doc) {
+           
+          
+const authCollection = firebase.firestore().collection("auth");
+
+// Query for the user ID in the auth collection
+authCollection.doc(emaid).get()
+  .then((doc) => {
+    if (doc.exists) {
+      
+        db.collection("mis").doc(id).get().then(function(doc) {
     if (doc.exists) {
     alert("Document already exist!");
     }else{
@@ -122,6 +186,18 @@
     });
     }
     });
+      
+    } else {
+      // Restrict write access if the document does not exist in the auth collection
+      alert("User not authorized to write data.");
+    }
+  })
+  .catch((error) => {
+    alert("Error getting document:", error);
+  });
+
+           
+  
            
   }
   
@@ -171,5 +247,4 @@
 	  // Return null if no radio button is checked
 	  return null;
 	}
-
 
