@@ -23,8 +23,8 @@
 
 	  // Create a new object with the form data
 	  var data = {
-            emaid,
-	    id,
+            emaid: emaid,
+	    id: id,
 	    name: name,
 	    phone: phone,
 	    points: Number(points),
